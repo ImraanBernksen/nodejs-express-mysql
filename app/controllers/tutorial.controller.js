@@ -1,5 +1,5 @@
 const db = require("../models");
-const Tutorial = db.tutorials;
+const Tutorials = db.tutorials;
 const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
@@ -11,14 +11,14 @@ exports.create = (req, res) => {
     }
   
     // Create a Tutorial
-    const tutorial = new Tutorial({
+    const tutorials = new Tutorials({
       title: req.body.title,
       description: req.body.description,
       published: req.body.published || false
     });
   
     // Save Tutorial in the database
-    Tutorial.create(tutorial, (err, data) => {
+    Tutorials.create(tutorials, (err, data) => {
       if (err)
         res.status(500).send({
           message:
@@ -32,7 +32,7 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
     const title = req.query.title;
   
-    Tutorial.getAll(title, (err, data) => {
+    Tutorials.getAll(title, (err, data) => {
       if (err)
         res.status(500).send({
           message:
@@ -43,7 +43,7 @@ exports.findAll = (req, res) => {
   };
   
   exports.findAllPublished = (req, res) => {
-    Tutorial.getAllPublished((err, data) => {
+    Tutorials.getAllPublished((err, data) => {
       if (err)
         res.status(500).send({
           message:
@@ -54,7 +54,7 @@ exports.findAll = (req, res) => {
   };
 
   exports.findOne = (req, res) => {
-    Tutorial.findById(req.params.id, (err, data) => {
+    Tutorials.findById(req.params.id, (err, data) => {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
@@ -79,9 +79,9 @@ exports.findAll = (req, res) => {
   
     console.log(req.body);
   
-    Tutorial.updateById(
+    Tutorials.updateById(
       req.params.id,
-      new Tutorial(req.body),
+      new Tutorials(req.body),
       (err, data) => {
         if (err) {
           if (err.kind === "not_found") {
@@ -99,7 +99,7 @@ exports.findAll = (req, res) => {
   };
 
   exports.delete = (req, res) => {
-    Tutorial.remove(req.params.id, (err, data) => {
+    Tutorials.remove(req.params.id, (err, data) => {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
@@ -115,7 +115,7 @@ exports.findAll = (req, res) => {
   };
 
   exports.deleteAll = (req, res) => {
-    Tutorial.removeAll((err, data) => {
+    Tutorials.removeAll((err, data) => {
       if (err)
         res.status(500).send({
           message:
